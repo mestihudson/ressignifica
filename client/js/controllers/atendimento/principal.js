@@ -1,7 +1,3 @@
-angular.module("nafavd").controller("AtendimentoPrincipalController", function($scope, AtendimentoService) {
-  (function(){
-    AtendimentoService.list().success(function(data) {
-      $scope.atendimentos = data;
-    });
-  })();
+angular.module("nafavd").controller("AtendimentoPrincipalController", function($scope, atendimentos) {
+  $scope.atendimentos = atendimentos.data;
 });
