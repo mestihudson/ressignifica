@@ -1,1 +1,1 @@
-angular.module("nafavd", ["ngRoute", "ngSanitize"]);
+angular.module("nafavd", ["ngRoute"]);

@@ -7,12 +7,20 @@ var app = express();
 var args = process.argv.slice(2);
 var assets = args[0] || '../client';
 var PORT = 3000;
-var atendimentos = [{
-  "id": 1,
-  "descritor":"AC/0001-2016",
-  "situacao":"aprovado",
-  "arquivo":"RFA_0001_2016.pdf"
-}];
+var atendimentos = [
+  {
+    "id": 1,
+    "nome":"Hudson Leite",
+    "nascimento": new Date(1980, 10, 10).getTime(),
+    "telefone":"61981301010"
+  },
+  {
+    "id": 2,
+    "nome":"Manuel Neto",
+    "nascimento": new Date(1986, 0, 19).getTime(),
+    "telefone":"8694384662"
+  }
+];
 
 // filtros
 app.use(bodyParser.urlencoded({ extended: false }));
