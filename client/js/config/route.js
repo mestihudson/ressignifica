@@ -15,6 +15,9 @@ angular.module("nafavd").config(function($routeProvider){
       resolve: {
         atendimento: function(AtendimentoService, $route) {
           return AtendimentoService.get($route.current.params.id);
+        },
+        questionario: function(QuestionarioService) {
+          return QuestionarioService.list();
         }
       }
     })

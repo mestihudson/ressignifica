@@ -6,19 +6,19 @@
     <input type="text" ng-model="atendimento.nascimento" name="nascimento" placeholder="Nascimento"/>[{{atendimento.nascimento | age:'DD/MM/YYYY'}}]
     <div>
       <h4>Questionário</h4>
-      <select ng-model="atendimento.questionamento.reencaminhamento" ng-options="reencaminhamento for reencaminhamento in questionamentos.reencaminhamento">
+      <select ng-model="atendimento.questionario.reencaminhamento" ng-options="reencaminhamento.descricao for reencaminhamento in questionario.reencaminhamento track by reencaminhamento.id">
         <option value="">Selecione um reencaminhamento</option>
       </select>
-      <select ng-model="atendimento.questionamento.situacao" ng-options="situacao for situacao in questionamentos.situacao">
-        <option value="">Selecione ums situação</option>
+      <select ng-model="atendimento.questionario.situacao" ng-options="situacao.descricao for situacao in questionario.situacao track by situacao.id">
+        <option value="">Selecione uma situação</option>
       </select>
-      <select ng-model="atendimento.questionamento.encerramento" ng-options="encerramento for encerramento in questionamentos.encerramento">
+      <select ng-model="atendimento.questionario.encerramento" ng-options="encerramento.descricao for encerramento in questionario.encerramento track by encerramento.id">
         <option value="">Selecione um encerramento</option>
       </select>
-      <select ng-model="atendimento.questionamento.indicacao" ng-options="indicacao for indicacao in questionamentos.indicacao">
+      <select ng-model="atendimento.questionario.indicaria" ng-options="indicaria.descricao for indicaria in questionario.indicaria track by indicaria.id">
         <option value="">Selecione uma indicação</option>
       </select>
-      <select ng-model="atendimento.questionamento.relacionamento" ng-options="relacionamento for relacionamento in questionamentos.relacionamento">
+      <select ng-model="atendimento.questionario.relacionamento" ng-options="relacionamento.descricao for relacionamento in questionario.relacionamento track by relacionamento.id">
         <option value="">Selecione um relacionamento</option>
       </select>
     </div>
