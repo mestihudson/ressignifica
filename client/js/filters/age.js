@@ -1,5 +1,9 @@
 angular.module("nafavd").filter("age", function() {
   return function(input){
-    return Math.floor((new Date() - new Date(input))/31557600000);
+    var today = new Date();
+    var birthday = new Date(input);
+    var diff = today - birthday;
+    var result = Math.floor((birthday)/31557600000);
+    return result;
   };
 });

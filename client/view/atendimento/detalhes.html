@@ -1,0 +1,25 @@
+  <h3>NAFAVD</h3>
+  <h4>Detalhes do Atendimento</h4>
+  <form name="atendimentoForm">
+    <input type="text" ng-model="atendimento.nome" name="nome" placeholder="Nome" ng-required="true"/>
+    <input type="text" ng-model="atendimento.telefone" name="telefone" placeholder="Telefone"/>
+    <input type="text" ng-model="atendimento.nascimento" name="nascimento" placeholder="Nascimento"/>[{{atendimento.nascimento | age}}]
+    <div>
+      <h4>Questionário</h4>
+      <select ng-model="atendimento.questionamento.reencaminhamento" ng-options="reencaminhamento for reencaminhamento in questionamentos.reencaminhamento">
+        <option value="">Selecione um reencaminhamento</option>
+      </select>
+      <select ng-model="atendimento.questionamento.situacao" ng-options="situacao for situacao in questionamentos.situacao">
+        <option value="">Selecione ums situação</option>
+      </select>
+      <select ng-model="atendimento.questionamento.encerramento" ng-options="encerramento for encerramento in questionamentos.encerramento">
+        <option value="">Selecione um encerramento</option>
+      </select>
+      <select ng-model="atendimento.questionamento.indicacao" ng-options="indicacao for indicacao in questionamentos.indicacao">
+        <option value="">Selecione uma indicação</option>
+      </select>
+      <select ng-model="atendimento.questionamento.relacionamento" ng-options="relacionamento for relacionamento in questionamentos.relacionamento">
+        <option value="">Selecione um relacionamento</option>
+      </select>
+    </div>
+  </form>

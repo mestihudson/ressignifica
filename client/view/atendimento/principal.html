@@ -11,7 +11,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="atendimento in atendimentos">
-        <td>{{atendimento.nome}}</td>
+        <td><a ng-click="detalhes(atendimento.id)">{{atendimento.nome}}</a></td>
         <td>{{atendimento.nascimento | date:"dd/MM/yyyy"}} [{{atendimento.nascimento | age}}]</td>
         <td>{{atendimento.telefone | phone}}</td>
       </tr>
