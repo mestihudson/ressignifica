@@ -1,5 +1,6 @@
   <h3>NAFAVD</h3>
   <h4>Detalhes do Atendimento</h4>
+  {{atendimento}}
   <form name="atendimentoForm">
     <input type="text" ng-model="atendimento.nome" name="nome" placeholder="Nome" ng-required="true"/>
     <input type="text" ng-model="atendimento.telefone" name="telefone" placeholder="Telefone"/>
@@ -12,7 +13,7 @@
       <select ng-model="atendimento.questionario.situacao" ng-options="situacao.descricao for situacao in questionario.situacao track by situacao.id">
         <option value="">Selecione uma situação</option>
       </select>
-      <select ng-model="atendimento.questionario.encerramento" ng-options="encerramento.descricao for encerramento in questionario.encerramento track by encerramento.id">
+      <select ng-model="atendimento.questionario.encerramento" ng-options="encerramento.descricao for encerramento in questionario.encerramento track by encerramento.id" ng-show="encerrado()">
         <option value="">Selecione um encerramento</option>
       </select>
       <select ng-model="atendimento.questionario.indicaria" ng-options="indicaria.descricao for indicaria in questionario.indicaria track by indicaria.id">
