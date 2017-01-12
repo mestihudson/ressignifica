@@ -4,7 +4,7 @@
   <form name="atendimentoForm">
     <input type="text" ng-model="atendimento.nome" name="nome" placeholder="Nome" ng-required="true"/>
     <input type="text" ng-model="atendimento.telefone" name="telefone" placeholder="Telefone" mask-phone/>
-    <input type="text" ng-model="atendimento.nascimento" name="nascimento" placeholder="Nascimento" mask-date/>[{{atendimento.nascimento | age}}]
+    <input type="text" ng-model="atendimento.nascimento" name="nascimento" placeholder="Nascimento" mask-date="dd/MM/yyyy"/>[{{atendimento.nascimento | age}}]
     <div>
       <h4>Questionário</h4>
       <select ng-model="atendimento.questionario.reencaminhamento" ng-options="reencaminhamento.descricao for reencaminhamento in questionario.reencaminhamento track by reencaminhamento.id">

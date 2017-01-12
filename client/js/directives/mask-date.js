@@ -20,12 +20,12 @@ angular.module("nafavd").directive("maskDate", function($filter) {
 
       controller.$parsers.push(function(value) {
         if(value.length === 10) {
-          return moment(value, "DD/MM/YYYY")._d.getTime();
+          return moment(value, attrs.maskDate.toUpperCase())._d.getTime();
         }
       });
 
       controller.$formatters.push(function(value) {
-        return $filter("date")(value, "dd/MM/yyyy");
+        return $filter("date")(value, attrs.maskDate);
       });
     }
   };
