@@ -3,14 +3,14 @@
   {{atendimento}}
   <form name="atendimentoForm">
     <input type="text" ng-model="atendimento.nome" name="nome" placeholder="Nome" ng-required="true"/>
-    <input type="text" ng-model="atendimento.telefone" name="telefone" placeholder="Telefone"/>
-    <input type="text" ng-model="atendimento.nascimento" name="nascimento" placeholder="Nascimento"/>[{{atendimento.nascimento | age:'DD/MM/YYYY'}}]
+    <input type="text" ng-model="atendimento.telefone" name="telefone" placeholder="Telefone" mask-phone/>
+    <input type="text" ng-model="atendimento.nascimento" name="nascimento" placeholder="Nascimento" mask-date/>[{{atendimento.nascimento | age}}]
     <div>
       <h4>Questionário</h4>
       <select ng-model="atendimento.questionario.reencaminhamento" ng-options="reencaminhamento.descricao for reencaminhamento in questionario.reencaminhamento track by reencaminhamento.id">
         <option value="">Selecione um reencaminhamento</option>
       </select>
-      <select ng-model="atendimento.questionario.situacao" ng-options="situacao.descricao for situacao in questionario.situacao track by situacao.id">
+      <select ng-model="atendimento.questionario.situacao" ng-options="situacao.descricao for situacao in questionario.situacao track by situacao.id" ng-change="mudarSituacao()">
         <option value="">Selecione uma situação</option>
       </select>
       <select ng-model="atendimento.questionario.encerramento" ng-options="encerramento.descricao for encerramento in questionario.encerramento track by encerramento.id" ng-show="encerrado()">
