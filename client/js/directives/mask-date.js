@@ -3,6 +3,7 @@ angular.module("nafavd").directive("maskDate", function($filter) {
     require: "ngModel",
     link: function(scope, element, attrs, controller) {
       var _formatDate = function (date) {
+        _format();
         date = date.replace(/[^0-9]+/g, "");
         if(date.length > 2) {
           date = date.substring(0, 2) + "/" + date.substring(2);
