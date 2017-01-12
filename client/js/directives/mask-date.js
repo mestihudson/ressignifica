@@ -20,8 +20,6 @@ angular.module("nafavd").directive("maskDate", function($filter) {
 
       controller.$parsers.push(function(value) {
         if(value.length === 10) {
-          // var a = value.split("/")
-          // return new Date(a[2], a[1]-1, a[0]).getTime();
           return moment(value, "DD/MM/YYYY")._d.getTime();
         }
       });
