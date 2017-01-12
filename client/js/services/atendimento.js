@@ -5,6 +5,9 @@ angular.module("nafavd").factory("AtendimentoService", function($http, config){
     },
     get: function(id) {
       return $http.get(config.BASE_URL + "/atendimento/" + id);
+    },
+    save: function(atendimento) {
+      return $http.post(config.BASE_URL + "/atendimento", atendimento);
     }
   };
 });

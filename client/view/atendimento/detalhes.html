@@ -3,7 +3,7 @@
   {{atendimento}}
   <form name="atendimentoForm">
     <input type="text" ng-model="atendimento.nome" name="nome" placeholder="Nome" ng-required="true"/>
-    <input type="text" ng-model="atendimento.telefone" name="telefone" placeholder="Telefone" mask-phone="(99) 9?999-9999"/>
+    <input type="text" ng-model="atendimento.telefone" name="telefone" placeholder="Telefone" mask-phone="(99) 9?999-9999" maxlength="15"/>
     <input type="text" ng-model="atendimento.nascimento" name="nascimento" placeholder="Nascimento" mask-date="dd/MM/yyyy"/>[{{atendimento.nascimento | age}}]
     <div>
       <h4>Questionário</h4>
@@ -23,4 +23,6 @@
         <option value="">Selecione um relacionamento</option>
       </select>
     </div>
+    <button ng-click="cancelar()">Cancelar</button>
+    <button ng-click="salvar(atendimento)" ng-disabled="atendimentoForm.$invalid">Salvar</button>
   </form>

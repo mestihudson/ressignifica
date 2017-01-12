@@ -8,6 +8,13 @@ var args = process.argv.slice(2);
 var assets = args[0] || '../client';
 var PORT = 3000;
 
+app.use(function(request, response, next) {
+  response.setHeader('Access-Control-Allow-Origin', '*');
+  response.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+  next();
+});
+
 var questionario = {
   "reencaminhamento": [{
     "id": 1,
@@ -105,6 +112,26 @@ app.get('/atendimento/:id', function(request, response) {
     }
   });
   response.status(404);
+});
+
+function indexOfById(id) {
+  atendimentos.forEach(function(atendimento, index) {
+    if(atendimento.id === id) {
+      return index;
+    }
+  });
+  return -1;
+};
+
+app.post('/atendimento', function(request, response) {
+  var atendimento = JSON.stringify(request.body);
+  var index = indexOfById(atendimento.id);
+  if(index > -1) {
+    atendimentos[index] = atendimento;
+    response.status(200);
+  } else {
+    response.status(404);
+  }
 });
 
 app.get('/questionario', function(request, response) {
