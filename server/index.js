@@ -1,75 +1,176 @@
-// requeridos
-var express = require('express');
+// imports
+var express = require("express");
 var bodyParser = require("body-parser");
+var uuid = require("uuid/v4");
 
-// variáveis
+// variables
 var app = express();
-var args = process.argv.slice(2);
-var assets = args[0] || '../client';
-var PORT = 3000;
+var port = process.env.PORT || 3000;
+var router = express.Router();
+var assets = process.env.ASSETS || "../client";
 
-app.use(function(request, response, next) {
-  response.setHeader('Access-Control-Allow-Origin', '*');
-  response.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-  response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
-  next();
+// filters
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static(assets));
+app.use("/", express.static(assets + "/index.html"));
+
+router.use(function(request, response, next) {
+    next();
 });
 
+// routes
+router.route("/").get(function(request, response) {
+  response.json({ message: "Ben-vindo a nossa api!"});
+});
+
+router.route("/atendimentos")
+  .get(function(request, response) {
+    console.log(atendimentos);
+    response.json(atendimentos);
+    response.status(200);
+    response.end();
+  });
+
+router.route("/atendimento/:id")
+  .get(function(request, response) {
+    var atendimento = findBy(atendimentos, function(atendimento) {
+      return atendimento.id === request.params.id;
+    });
+    if(atendimento !== null) {
+      response.json(atendimento);
+      response.status(200);
+      response.end();
+      return;
+    } else {
+      response.status(404);
+    }
+  })
+  .put(function(request, response) {
+    var index = indexOf(atendimentos, function(atendimento) {
+      return atendimento.id === request.params.id;
+    });
+    if(index !== -1) {
+      response.json(atendimentos[index] = request.body);
+      response.status(200);
+      response.end();
+      return;
+    } else {
+      response.status(404);
+    }
+  })
+  .delete(function(request, response) {
+    var index = indexOf(atendimentos, function(atendimento) {
+      return atendimento.id === request.params.id;
+    });
+    if(index !== -1) {
+      atendimentos.splice(index, 1);
+      response.status(200);
+      response.end();
+      return;
+    } else {
+      response.status(404);
+    }
+  });
+
+router.route("/atendimento")
+  .post(function(request, response) {
+    var atendimento = request.body;
+    console.log(atendimento);
+    atendimento = save(atendimentos, atendimento);
+    console.log(atendimento);
+    response.json(atendimento);
+    response.status(200);
+    response.end();
+  });
+
+// service
+var save = function(collection, item) {
+  item.id = id();
+  collection.push(item);
+  return item;
+};
+
+var id = function() {
+  return uuid();
+};
+
+var indexOf = function(collection, asserter) {
+  var result = -1;
+  collection.forEach(function(item, index) {
+    if(asserter(item, index, collection)) {
+      result = index;
+      return;
+    }
+  });
+  return result;
+}
+
+var findBy = function(collection, by) {
+  var result = null;
+  var index = indexOf(collection, by);
+  if(index !== -1) {
+    result = collection[index];
+  }
+  return result;
+}
+
+// data
 var questionario = {
   "reencaminhamento": [{
-    "id": 1,
+    "id": id(),
     "descricao": "mesmo processo"
   },{
-    "id": 2,
+    "id": id(),
     "descricao": "outro processo"
   },{
-    "id": 3,
+    "id": id(),
     "descricao": "sem informação"
   }],
   "situacao": [{
-    "id": 1,
+    "id": id(),
     "descricao": "concluído"
   },{
-    "id": 2,
+    "id": id(),
     "descricao": "encerramento"
   }],
   "encerramento": [{
-    "id": 1,
+    "id": id(),
     "descricao": "abandono"
   },{
-    "id": 2,
+    "id": id(),
     "descricao": "faltas"
   },{
-    "id": 3,
+    "id": id(),
     "descricao": "não apresentou perfil"
   }],
   "indicaria": [{
-    "id": 1,
+    "id": id(),
     "descricao": "sim"
   },{
-    "id": 2,
+    "id": id(),
     "descricao": "não"
   },{
-    "id": 3,
+    "id": id(),
     "descricao": "não opinou"
   }],
   "relacionamento": [{
-    "id": 1,
+    "id": id(),
     "descricao": "mesmo relacionamento"
   },{
-    "id": 2,
+    "id": id(),
     "descricao": "outro relacionamento"
   },{
-    "id": 3,
+    "id": id(),
     "descricao": "sem relacionamento"
   },{
-    "id": 4,
+    "id": id(),
     "descricao": "não opinou"
   }]
 };
 
 var atendimentos = [{
-  "id": 1,
+  "id": id(),
   "nome": "Hudson Leite",
   "nascimento": new Date(1980, 10, 10).getTime(),
   "telefone": "61981301010",
@@ -80,7 +181,7 @@ var atendimentos = [{
     "relacionamento": { "id": 1 }
   }
 },{
-  "id": 2,
+  "id": id(),
   "nome": "Manuel Neto",
   "nascimento": new Date(1986, 0, 19).getTime(),
   "telefone": "8694384662",
@@ -93,51 +194,9 @@ var atendimentos = [{
   }
 }];
 
-// filtros
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.static(assets));
-app.use('/', express.static(assets + '/index.html'));
+// config to prefix routers
+app.use("/api", router);
 
-// recursos
-app.get('/atendimentos', function(request, response) {
-  response.send(atendimentos);
-});
-
-app.get('/atendimento/:id', function(request, response) {
-  atendimentos.forEach(function(atendimento) {
-    if(atendimento.id == request.params.id) {
-      response.json(atendimento);
-      return;
-    }
-  });
-  response.status(404);
-});
-
-function indexOfById(id) {
-  atendimentos.forEach(function(atendimento, index) {
-    if(atendimento.id === id) {
-      return index;
-    }
-  });
-  return -1;
-};
-
-app.post('/atendimento', function(request, response) {
-  var atendimento = JSON.stringify(request.body);
-  var index = indexOfById(atendimento.id);
-  if(index > -1) {
-    atendimentos[index] = atendimento;
-    response.status(200);
-  } else {
-    response.status(404);
-  }
-});
-
-app.get('/questionario', function(request, response) {
-  response.send(questionario);
-});
-
-// ligando servidor
-app.listen(PORT);
-console.log("rodando servidor mock na porta: " + PORT + " e servindo arquivos a partir do diretório: " + assets);
+// start app
+app.listen(port);
+console.log("A mágica acontece na porta: " + port);

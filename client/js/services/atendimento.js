@@ -8,6 +8,12 @@ angular.module("nafavd").factory("AtendimentoService", function($http, config){
     },
     save: function(atendimento) {
       return $http.post(config.BASE_URL + "/atendimento", atendimento);
+    },
+    update: function(atendimento) {
+      return $http.put(config.BASE_URL + "/atendimento/" + atendimento.id, atendimento);
+    },
+    delete: function(atendimento) {
+      return $http.delete(config.BASE_URL + "/atendimento/" + atendimento.id);
     }
   };
 });
