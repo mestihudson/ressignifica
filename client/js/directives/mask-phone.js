@@ -3,7 +3,7 @@ angular.module("nafavd").directive("maskPhone", function($filter) {
     require: "ngModel",
     link: function(scope, element, attrs, controller) {
       var _unmask = function(phone) {
-        return phone.replace(/[^0-9]+/g, "");
+        return phone ? phone.replace(/[^0-9]+/g, "") : "";
       };
 
       var _mask = function (phone, mask) {
@@ -32,7 +32,7 @@ angular.module("nafavd").directive("maskPhone", function($filter) {
       });
 
       controller.$formatters.push(function(value) {
-        return $filter("phone")(_unmask(value));
+        return value ? $filter("phone")(_unmask(value)) : "";
       });
     }
   };

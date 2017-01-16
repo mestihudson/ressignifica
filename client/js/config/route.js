@@ -21,5 +21,14 @@ angular.module("nafavd").config(function($routeProvider){
         }
       }
     })
+    .when("/atendimento", {
+      controller: "AtendimentoNovoController",
+      templateUrl: "view/atendimento/detalhes.html",
+      resolve: {
+        questionario: function(QuestionarioService) {
+          return QuestionarioService.list();
+        }
+      }
+    })
     .otherwise("/atendimentos");
 });

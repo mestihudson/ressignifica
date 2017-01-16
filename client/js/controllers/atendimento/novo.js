@@ -1,4 +1,4 @@
-angular.module("nafavd").controller("AtendimentoDetalhesController", function($scope, atendimento, $filter, questionario, $location, AtendimentoService, $timeout) {
+angular.module("nafavd").controller("AtendimentoNovoController", function($scope, $filter, questionario, $location, AtendimentoService, $timeout) {
   var _situacaoByDescricao = function(descricao) {
     return $scope.questionario.situacao.filter(function(item) {
       return item.descricao === descricao;
@@ -21,10 +21,18 @@ angular.module("nafavd").controller("AtendimentoDetalhesController", function($s
     $location.path("/atendimentos");
   };
 
+  var _alert = function(mensagem, after) {
+    $scope.mensagem = mensagem;
+    $timeout(function() {
+      delete $scope.mensagem;
+      after ? after() : null;
+    }, 3000);
+  };
+
   var _salvar = function(atendimento) {
-    AtendimentoService.update(atendimento)
+    AtendimentoService.save(atendimento)
       .success(function() {
-        _alert("Dados atualizados com sucesso!");
+        _alert("Dados atualizados com sucesso!", _voltar);
       })
       .error(function(data, status) {
         if(status === 404) {
@@ -37,15 +45,15 @@ angular.module("nafavd").controller("AtendimentoDetalhesController", function($s
     return !!$scope.mensagem;
   }
 
-  var _alert = function(mensagem, after) {
-    $scope.mensagem = mensagem;
-    $timeout(function() {
-      delete $scope.mensagem;
-      after ? after() : null;
-    }, 3000);
+  $scope.atendimento = {
+    "questionario": {
+      "reencaminhamento": {},
+      "situacao": {},
+      "encerramento": {},
+      "indicaria": {},
+      "relacionamento": {}
+    }
   };
-
-  $scope.atendimento = atendimento.data;
   $scope.questionario = questionario.data;
   $scope.encerrado = _encerrado;
   $scope.mudarSituacao = _mudarSituacao;

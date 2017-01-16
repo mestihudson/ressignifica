@@ -26,7 +26,6 @@ router.route("/").get(function(request, response) {
 
 router.route("/questionarios")
   .get(function(request, response) {
-    console.log(questionario);
     response.json(questionario);
     response.status(200);
     response.end();
@@ -34,7 +33,6 @@ router.route("/questionarios")
 
 router.route("/atendimentos")
   .get(function(request, response) {
-    console.log(atendimentos);
     response.json(atendimentos);
     response.status(200);
     response.end();
@@ -57,7 +55,6 @@ router.route("/atendimento/:id")
   .put(function(request, response) {
     var atendimento = request.body;
     var id = request.params.id;
-    console.log(id, atendimento, atendimentos);
     if(update(atendimentos, id, atendimento)) {
       response.json();
       response.status(200);
@@ -68,11 +65,8 @@ router.route("/atendimento/:id")
     }
   })
   .delete(function(request, response) {
-    var index = indexOf(atendimentos, function(atendimento) {
-      return atendimento.id === request.params.id;
-    });
-    if(index !== -1) {
-      atendimentos.splice(index, 1);
+    var id = request.params.id;
+    if(remove(atendimentos, id)) {
       response.status(200);
       response.end();
       return;
@@ -91,6 +85,18 @@ router.route("/atendimento")
   });
 
 // service
+var remove = function(collection, id) {
+  var index = indexOf(collection, function(element) {
+    return element.id === id;
+  });
+  if(index !== -1) {
+    collection.splice(index, 1);
+    return true;
+  } else {
+    return false;
+  }
+};
+
 var update = function(collection, id, item) {
   var index = indexOf(collection, function(element) {
     return element.id === id;

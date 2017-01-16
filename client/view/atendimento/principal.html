@@ -1,5 +1,7 @@
   <h3>NAFAVD</h3>
+  <button ng-click="novo()">Novo</button>
   <h4>Atentimentos</h4>
+  <h6 ng-show="mural()">{{mensagem}}</h6>
   <table>
     <thead>
       <tr>
@@ -14,6 +16,7 @@
         <td><a ng-click="detalhes(atendimento.id)">{{atendimento.nome}}</a></td>
         <td>{{atendimento.nascimento | date:"dd/MM/yyyy"}} [{{atendimento.nascimento | age}}]</td>
         <td>{{atendimento.telefone | phone}}</td>
+        <td><a ng-click="remover(atendimento)">remover</a></td>
       </tr>
     </tbody>
   </table>

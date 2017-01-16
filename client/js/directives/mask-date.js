@@ -25,7 +25,7 @@ angular.module("nafavd").directive("maskDate", function($filter) {
       });
 
       controller.$formatters.push(function(value) {
-        return $filter("date")(value, attrs.maskDate);
+        return value ? $filter("date")(value, attrs.maskDate): "";
       });
     }
   };
