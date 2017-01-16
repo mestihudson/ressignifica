@@ -1,6 +1,6 @@
   <h3>NAFAVD</h3>
   <h4>Detalhes do Atendimento</h4>
-  {{atendimento}}
+  <h6 ng-show="mural()">{{mensagem}}</h6>
   <form name="atendimentoForm">
     <input type="text" ng-model="atendimento.nome" name="nome" placeholder="Nome" ng-required="true"/>
     <input type="text" ng-model="atendimento.telefone" name="telefone" placeholder="Telefone" mask-phone="(99) 9?999-9999" maxlength="15"/>
@@ -23,6 +23,6 @@
         <option value="">Selecione um relacionamento</option>
       </select>
     </div>
-    <button ng-click="cancelar()">Cancelar</button>
+    <button ng-click="voltar()">Voltar</button>
     <button ng-click="salvar(atendimento)" ng-disabled="atendimentoForm.$invalid">Salvar</button>
   </form>

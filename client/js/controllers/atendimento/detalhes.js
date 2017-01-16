@@ -16,25 +16,32 @@ angular.module("nafavd").controller("AtendimentoDetalhesController", function($s
     }
   };
 
-  var _cancelar = function() {
+  var _voltar = function() {
     $scope.atendimentoForm.$setPristine();
     $location.path("/atendimentos");
   };
 
   var _salvar = function(atendimento) {
     AtendimentoService.update(atendimento)
-      .success(function(a,b,c,d) {
-        console.log(a,b,c,d);
+      .success(function() {
+        $scope.mensagem = "Dados atualizados com sucesso!";
       })
-      .error(function(a,b,c,d) {
-        console.log(a,b,c,d);
+      .error(function(data, status) {
+        if(status === 404) {
+          $scope.mensagem = "Usuário não encontrado!";
+        }
       });
   };
+
+  var _mural = function() {
+    return !!$scope.mural;
+  }
 
   $scope.atendimento = atendimento.data;
   $scope.questionario = questionario.data;
   $scope.encerrado = _encerrado;
   $scope.mudarSituacao = _mudarSituacao;
-  $scope.cancelar = _cancelar;
+  $scope.voltar = _voltar;
   $scope.salvar = _salvar;
+  $scope.mural = _mural;
 });

@@ -55,11 +55,11 @@ router.route("/atendimento/:id")
     }
   })
   .put(function(request, response) {
-    var index = indexOf(atendimentos, function(atendimento) {
-      return atendimento.id === request.params.id;
-    });
-    if(index !== -1) {
-      response.json(atendimentos[index] = request.body);
+    var atendimento = request.body;
+    var id = request.params.id;
+    console.log(id, atendimento, atendimentos);
+    if(update(atendimentos, id, atendimento)) {
+      response.json();
       response.status(200);
       response.end();
       return;
@@ -84,15 +84,24 @@ router.route("/atendimento/:id")
 router.route("/atendimento")
   .post(function(request, response) {
     var atendimento = request.body;
-    console.log(atendimento);
     atendimento = save(atendimentos, atendimento);
-    console.log(atendimento);
     response.json(atendimento);
     response.status(200);
     response.end();
   });
 
 // service
+var update = function(collection, id, item) {
+  var index = indexOf(collection, function(element) {
+    return element.id === id;
+  });
+  if(index !== -1) {
+    return (collection[index] = item);
+  } else {
+    return null;
+  }
+};
+
 var save = function(collection, item) {
   item.id = id();
   collection.push(item);
