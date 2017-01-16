@@ -24,6 +24,14 @@ router.route("/").get(function(request, response) {
   response.json({ message: "Ben-vindo a nossa api!"});
 });
 
+router.route("/questionarios")
+  .get(function(request, response) {
+    console.log(questionario);
+    response.json(questionario);
+    response.status(200);
+    response.end();
+  });
+
 router.route("/atendimentos")
   .get(function(request, response) {
     console.log(atendimentos);
@@ -118,53 +126,53 @@ var findBy = function(collection, by) {
 // data
 var questionario = {
   "reencaminhamento": [{
-    "id": id(),
+    "id": 1,
     "descricao": "mesmo processo"
   },{
-    "id": id(),
+    "id": 2,
     "descricao": "outro processo"
   },{
-    "id": id(),
+    "id": 3,
     "descricao": "sem informação"
   }],
   "situacao": [{
-    "id": id(),
+    "id": 1,
     "descricao": "concluído"
   },{
-    "id": id(),
+    "id": 2,
     "descricao": "encerramento"
   }],
   "encerramento": [{
-    "id": id(),
+    "id": 1,
     "descricao": "abandono"
   },{
-    "id": id(),
+    "id": 2,
     "descricao": "faltas"
   },{
-    "id": id(),
+    "id": 3,
     "descricao": "não apresentou perfil"
   }],
   "indicaria": [{
-    "id": id(),
+    "id": 1,
     "descricao": "sim"
   },{
-    "id": id(),
+    "id": 2,
     "descricao": "não"
   },{
-    "id": id(),
+    "id": 3,
     "descricao": "não opinou"
   }],
   "relacionamento": [{
-    "id": id(),
+    "id": 1,
     "descricao": "mesmo relacionamento"
   },{
-    "id": id(),
+    "id": 2,
     "descricao": "outro relacionamento"
   },{
-    "id": id(),
+    "id": 3,
     "descricao": "sem relacionamento"
   },{
-    "id": id(),
+    "id": 4,
     "descricao": "não opinou"
   }]
 };

@@ -22,7 +22,7 @@ angular.module("nafavd").controller("AtendimentoDetalhesController", function($s
   };
 
   var _salvar = function(atendimento) {
-    AtendimentoService.save(atendimento)
+    AtendimentoService.update(atendimento)
       .success(function(a,b,c,d) {
         console.log(a,b,c,d);
       })
