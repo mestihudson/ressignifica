@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
+let mongoose = require("mongoose");
 
-var AtendimentoSchema = new mongoose.Schema({
+let AtendimentoSchema = new mongoose.Schema({
   nome: { type: String, required: true },
   nascimento: { type: Date },
   telefone: { type: String },
