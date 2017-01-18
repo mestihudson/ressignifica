@@ -39,10 +39,6 @@ router.use(function(request, response, next) {
 });
 
 // routes
-router.route("/").get(function(request, response) {
-  response.json({ message: "Ben-vindo a nossa api!"});
-});
-
 router.route("/questionarios")
   .get(questionario.list);
 

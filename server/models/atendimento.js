@@ -4,6 +4,13 @@ let AtendimentoSchema = new mongoose.Schema({
   nome: { type: String, required: true },
   nascimento: { type: Date },
   telefone: { type: String },
+  questionario: {
+    reencaminhamento: { id: Number },
+    situacao: { id: Number },
+    encerramento: { id: Number },
+    indicaria: { id: Number },
+    relacionamento: { id: Number }
+  },
   criadoEm: { type: Date, default: Date.now }
 }, {
   versionKey: false
