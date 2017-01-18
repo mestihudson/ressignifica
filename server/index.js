@@ -2,6 +2,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var uuid = require("uuid/v4");
+var config = require("config");
 var mongoose = require("mongoose");
 var morgan = require("morgan");
 var atendimento = require("./routes/atendimento");
@@ -14,7 +15,7 @@ var router = express.Router();
 var assets = process.env.ASSETS || "../client";
 var options = {
   server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
-  replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 }
+  replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } }
 };
 
 // filters
@@ -51,7 +52,7 @@ router.route("/atendimentos")
 router.route("/atendimento/:id")
   .get(atendimento.get)
   .put(atendimento.update)
-  .delete(atendimento.delete);
+  .delete(atendimento.remove);
 
 router.route("/atendimento")
   .post(atendimento.save);

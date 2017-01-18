@@ -23,7 +23,7 @@ function save(request, response) {
     });
 }
 
-function get(function(request, response) {
+function get(request, response) {
   Atendimento.findById(request.params.id, (error, atendimento) => {
     if(error) {
       response.send(error);
@@ -33,7 +33,7 @@ function get(function(request, response) {
   });
 }
 
-function delete(request, response) {
+function remove(request, response) {
   Atendimento.remove({ _id: request.params.id}, (error, result) => {
     response.json({ message: "Atendimento removido com sucesso", result });
   });
@@ -54,4 +54,4 @@ function update(request, response) {
   });
 }
 
-module.exports = { list, save, get, delete, update };
+module.exports = { list, save, get, remove, update };
