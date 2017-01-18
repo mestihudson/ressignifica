@@ -1,26 +1,26 @@
 // imports
-var express = require("express");
-var bodyParser = require("body-parser");
-var uuid = require("uuid/v4");
-var config = require("config");
-var mongoose = require("mongoose");
-var morgan = require("morgan");
-var atendimento = require("./routes/atendimento");
-var questionario = require("./routes/questionario");
+let express = require("express");
+let bodyParser = require("body-parser");
+let uuid = require("uuid/v4");
+let config = require("config");
+let mongoose = require("mongoose");
+let morgan = require("morgan");
+let atendimento = require("./routes/atendimento");
+let questionario = require("./routes/questionario");
 
 // variables
-var app = express();
-var port = process.env.PORT || 3000;
-var router = express.Router();
-var assets = process.env.ASSETS || "../client";
-var options = {
+let app = express();
+let port = process.env.PORT || 3000;
+let router = express.Router();
+let assets = process.env.ASSETS || "../client";
+let options = {
   server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
   replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } }
 };
 
 // filters
 mongoose.connect(config.DBHost, options);
-var db = mongoose.connection;
+let db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 
 if(config.util.getEnv("NODE_ENV") !== "test") {
