@@ -1,4 +1,4 @@
-angular.module("Resignifica").filter("phone", function() {
+angular.module("Ressignifica").filter("phone", function() {
   return function(input){
     input = input.split("");
     var code = input.splice(0,2).join("");

@@ -1,1 +1,1 @@
-angular.module("Resignifica", ["ngRoute"]);
+angular.module("Ressignifica", ["ngRoute"]);

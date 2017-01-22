@@ -1,4 +1,4 @@
-angular.module("Resignifica").controller("AtendimentoDetalhesController", function($scope, atendimento, $filter, questionario, $location, AtendimentoService, $timeout) {
+angular.module("Ressignifica").controller("AtendimentoDetalhesController", function($scope, atendimento, $filter, questionario, $location, AtendimentoService, $timeout) {
   var _situacaoByDescricao = function(descricao) {
     return $scope.questionario.situacao.filter(function(item) {
       return item.descricao === descricao;

@@ -1,4 +1,4 @@
-angular.module("Resignifica").factory("AtendimentoService", function($http, config){
+angular.module("Ressignifica").factory("AtendimentoService", function($http, config){
   return {
     list: function() {
       return $http.get(config.BASE_URL + "/atendimentos");

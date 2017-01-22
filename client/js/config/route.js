@@ -1,4 +1,4 @@
-angular.module("Resignifica").config(function($routeProvider){
+angular.module("Ressignifica").config(function($routeProvider){
   $routeProvider
     .when("/atendimentos", {
       controller: "AtendimentoPrincipalController",

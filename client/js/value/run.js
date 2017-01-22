@@ -1,3 +1,3 @@
-angular.module("Resignifica").run(function($rootScope, config) {
+angular.module("Ressignifica").run(function($rootScope, config) {
   $rootScope.config = config;
 });
