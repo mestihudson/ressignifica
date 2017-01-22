@@ -1,4 +1,4 @@
-angular.module("nafavd").controller("AtendimentoPrincipalController", function($scope, atendimentos, $location, AtendimentoService, $timeout, $route) {
+angular.module("Resignifica").controller("AtendimentoPrincipalController", function($scope, atendimentos, $location, AtendimentoService, $timeout, $route) {
   var _detalhes = function(id) {
     $location.path("/atendimento/" + id);
   };

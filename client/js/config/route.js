@@ -1,4 +1,4 @@
-angular.module("nafavd").config(function($routeProvider){
+angular.module("Resignifica").config(function($routeProvider){
   $routeProvider
     .when("/atendimentos", {
       controller: "AtendimentoPrincipalController",

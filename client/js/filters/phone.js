@@ -1,4 +1,4 @@
-angular.module("nafavd").filter("phone", function() {
+angular.module("Resignifica").filter("phone", function() {
   return function(input){
     input = input.split("");
     var code = input.splice(0,2).join("");

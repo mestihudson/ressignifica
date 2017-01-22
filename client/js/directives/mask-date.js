@@ -1,4 +1,4 @@
-angular.module("nafavd").directive("maskDate", function($filter) {
+angular.module("Resignifica").directive("maskDate", function($filter) {
   return {
     require: "ngModel",
     link: function(scope, element, attrs, controller) {

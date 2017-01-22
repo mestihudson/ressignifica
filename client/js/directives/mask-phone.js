@@ -1,4 +1,4 @@
-angular.module("nafavd").directive("maskPhone", function($filter) {
+angular.module("Resignifica").directive("maskPhone", function($filter) {
   return {
     require: "ngModel",
     link: function(scope, element, attrs, controller) {

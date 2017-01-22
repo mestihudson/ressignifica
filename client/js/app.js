@@ -1,1 +1,1 @@
-angular.module("nafavd", ["ngRoute"]);
+angular.module("Resignifica", ["ngRoute"]);
