@@ -10,10 +10,10 @@ angular.module("nafavd").factory("AtendimentoService", function($http, config){
       return $http.post(config.BASE_URL + "/atendimento", atendimento);
     },
     update: function(atendimento) {
-      return $http.put(config.BASE_URL + "/atendimento/" + atendimento.id, atendimento);
+      return $http.put(config.BASE_URL + "/atendimento/" + atendimento._id, atendimento);
     },
     delete: function(atendimento) {
-      return $http.delete(config.BASE_URL + "/atendimento/" + atendimento.id);
+      return $http.delete(config.BASE_URL + "/atendimento/" + atendimento._id);
     }
   };
 });
