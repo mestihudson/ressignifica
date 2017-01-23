@@ -17,13 +17,33 @@ describe('Atendimento', () => {
   });
 
   describe('/GET atendimentos', () => {
-    it('it deve retornar todos os atendimentos', (done) => {
+    it('deve retornar todos os atendimentos', (done) => {
       chai.request(server)
         .get('/api/atendimentos')
         .end((error, response) => {
           response.should.have.status(200);
           response.body.should.be.a('array');
           response.body.length.should.be.eql(0);
+          done();
+        });
+    });
+  });
+
+  describe('/POST atendimento', () => {
+    it('não deve salvar o atendimento sem as informações obrigatórias', (done) => {
+      let atendimento = {
+        nascimento: new Date(1980, 10, 10).getTime(),
+        telefone: "61981301010"
+      }
+      chai.request(server)
+        .post('/api/atendimento')
+        .send(atendimento)
+        .end((error, response) => {
+          response.should.have.status(200);
+          response.body.should.be.a('object');
+          response.body.should.have.property('errors');
+          // response.body.errors.should.have.property('nome');
+          response.body.errors.pages.should.have.property('nome').eql('required');
           done();
         });
     });
