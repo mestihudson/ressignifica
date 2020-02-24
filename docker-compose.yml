@@ -1,0 +1,117 @@
+version: '3.7'
+
+networks:
+  ressignifica:
+    name: ressignifica
+    ipam:
+      config:
+      - subnet: 14.14.14.0/24
+
+services:
+  ressignifica-e2e:
+    container_name: ressignifica-e2e
+    image: node:13.8.0-alpine3.11
+    working_dir: /ws/e2e
+    entrypoint: /bin/sh -c 'tail -f'
+    volumes:
+    - .:/ws
+    environment:
+      BROWSER: chrome
+      UI_URL: http://ressignifica-ui:3000
+      HUB_HOST: ressignifica-hub
+      HUB_PORT: 4444
+      SCREENSHOTS: .screenshots
+    networks:
+      ressignifica:
+        ipv4_address: 14.14.14.2
+
+  ressignifica-hub:
+    container_name: ressignifica-hub
+    image: selenium/hub:2.53.1
+    ports:
+    - 4444
+    networks:
+      ressignifica:
+        ipv4_address: 14.14.14.3
+
+  ressignifica-chrome:
+    container_name: ressignifica-chrome
+    image: selenium/node-chrome-debug:2.53.1
+    ports:
+    - 9000
+    - 5901:5900
+    environment:
+      HUB_PORT_4444_TCP_ADDR: ressignifica-hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      SCREEN_WIDTH: 2000
+      SCREEN_HEIGHT: 2000
+    networks:
+      ressignifica:
+        ipv4_address: 14.14.14.4
+
+  ressignifica-firefox:
+    container_name: ressignifica-firefox
+    image: selenium/node-firefox-debug:2.53.1
+    ports:
+    - 9000
+    - 5902:5900
+    environment:
+      HUB_PORT_4444_TCP_ADDR: ressignifica-hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      SCREEN_WIDTH: 2000
+      SCREEN_HEIGHT: 2000
+    networks:
+      ressignifica:
+        ipv4_address: 14.14.14.5
+
+  ressignifica-ui:
+    container_name: ressignifica-ui
+    image: node:13.8.0-alpine3.11
+    working_dir: /ws/ui
+    entrypoint: /bin/sh -c 'yarn install && yarn start; tail -f'
+    volumes:
+    - .:/ws
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      REACT_APP_API_URL: http://ressignifica-api:4000
+    ports:
+    - 3000:3000
+    networks:
+      ressignifica:
+        ipv4_address: 14.14.14.6
+
+  ressignifica-db:
+    container_name: ressignifica-db
+    image: postgres:9.6.15-alpine
+    working_dir: /ws/db
+    command: ["postgres", "-c", "log_statement=all"]
+    volumes:
+    - .:/ws
+    - ./db/migrations:/docker-entrypoint-initdb.d
+    environment:
+      PGDATESTYLE: iso, dmy
+    env_file:
+    - db/local.env
+    ports:
+    - 5432
+    networks:
+      ressignifica:
+        ipv4_address: 14.14.14.7
+
+  ressignifica-api:
+    container_name: ressignifica-api
+    image: node:13.8.0-alpine3.11
+    working_dir: /ws/api
+    entrypoint: /bin/sh -c 'yarn install && yarn start:w; tail -f'
+    volumes:
+    - .:/ws
+    environment:
+      PORT: 4000
+      HOST: 0.0.0.0
+    ports:
+    - 4000:4000
+    networks:
+      ressignifica:
+        ipv4_address: 14.14.14.8
+

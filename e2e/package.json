@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "e2e": "cucumber-js --require cucumber.conf.js --require-module @babel/register --format node_modules/cucumber-pretty --require src/steps src/features/**/*.feature",
+    "e2e:w": "nodemon --exec 'yarn e2e'"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/register": "^7.8.3",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "chai": "^4.2.0",
+    "cucumber": "^6.0.5",
+    "cucumber-pretty": "^6.0.0",
+    "nodemon": "^2.0.2",
+    "pg": "^7.18.2",
+    "selenium-webdriver": "^4.0.0-alpha.5",
+    "string": "^3.3.3"
+  }
+}
