@@ -1,6 +1,8 @@
-import { BeforeAll, After, AfterAll } from 'cucumber'
+import { setDefaultTimeout, BeforeAll, After, AfterAll } from 'cucumber'
 
 import Driver from '@/helpers/Driver'
+
+setDefaultTimeout(60 * 1000)
 
 BeforeAll(async () => {
   Driver.instance({
