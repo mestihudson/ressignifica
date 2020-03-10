@@ -10,7 +10,7 @@ export default class App {
     this.ui = new UI(Driver.instance(), process.env.UI_URL)
   }
 
-  async setupAssisted (assisted) {
+  async setupReceptions (receptions) {
     await this.db.register(
       'delete from assisted',
       []
@@ -19,19 +19,19 @@ export default class App {
       'alter sequence ressignifica.assisted_id_seq restart with 1',
       []
     )
-    for (let i = 0, l = assisted.length; i < l; i++) {
+    for (let i = 0, l = receptions.length; i < l; i++) {
       await this.db.register(
         'insert into assisted (name) values ($1)',
-        [assisted[i].name]
+        [receptions[i].name]
       )
     }
   }
 
-  async listAssisted () {
+  async listReceptions () {
     await this.ui.list()
   }
 
-  async assistedHaveBeenShown (assisted) {
-    expect(await this.ui.showneds()).to.eql(assisted)
+  async receptionsHaveBeenShown (receptions) {
+    expect(await this.ui.showneds()).to.eql(receptions)
   }
 }
