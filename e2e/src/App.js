@@ -12,16 +12,16 @@ export default class App {
 
   async setupReceptions (receptions) {
     await this.db.register(
-      'delete from assisted',
+      'delete from reception',
       []
     )
     await this.db.register(
-      'alter sequence ressignifica.assisted_id_seq restart with 1',
+      'alter sequence ressignifica.reception_id_seq restart with 1',
       []
     )
     for (let i = 0, l = receptions.length; i < l; i++) {
       await this.db.register(
-        'insert into assisted (name) values ($1)',
+        'insert into reception (name) values ($1)',
         [receptions[i].name]
       )
     }

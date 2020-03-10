@@ -1,11 +1,11 @@
 import express from 'express'
 
-import Assisteds from '@/usecases/LoadAssisteds'
+import LoadReceptions from '@/usecases/LoadReceptions'
 
 const app = express()
 
 app.get('/assisteds', async (request, response) => {
-  const useCase = new Assisteds()
+  const useCase = new LoadReceptions()
   response.json(await useCase.exec())
 })
 

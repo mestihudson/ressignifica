@@ -1,6 +1,6 @@
 import { Pool } from 'pg'
 
-export default class AssistedRepository {
+export default class ReceptionRepository {
   constructor () {
     this.pool = new Pool({
       user: 'ressignifica',
@@ -14,7 +14,7 @@ export default class AssistedRepository {
   async load () {
     const client = await this.pool.connect()
     const result = await client.query(
-      'select * from assisted',
+      'select * from reception',
       []
     )
     await client.release()
