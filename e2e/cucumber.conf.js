@@ -7,7 +7,7 @@ setDefaultTimeout(60 * 1000)
 BeforeAll(async () => {
   Driver.instance({
     browser: process.env.BROWSER,
-    hub: `http://${process.env.HUB_HOST}:${process.env.HUB_PORT}/wd/hub`,
+    hub: process.env.HUB_URL,
     screenshots: process.env.SCREENSHOTS
   })
 })

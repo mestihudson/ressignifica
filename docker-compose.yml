@@ -12,14 +12,12 @@ services:
     container_name: ressignifica-e2e
     image: node:13.8.0-alpine3.11
     working_dir: /ws/e2e
-    entrypoint: /bin/sh -c 'tail -f'
+    entrypoint: /bin/sh -c '/ws/e2e/entrypoint.sh; tail -f'
     volumes:
     - .:/ws
     environment:
-      BROWSER: chrome
       UI_URL: http://ressignifica-ui:3000
-      HUB_HOST: ressignifica-hub
-      HUB_PORT: 4444
+      HUB_URL: http://ressignifica-hub:4444/wd/hub
       SCREENSHOTS: .screenshots
     networks:
       ressignifica:
@@ -38,7 +36,6 @@ services:
     container_name: ressignifica-chrome
     image: selenium/node-chrome-debug:3.141.59
     ports:
-    - 9000
     - 5901:5900
     environment:
       HUB_PORT_4444_TCP_ADDR: ressignifica-hub
@@ -53,7 +50,6 @@ services:
     container_name: ressignifica-firefox
     image: selenium/node-firefox-debug:3.141.59
     ports:
-    - 9000
     - 5902:5900
     environment:
       HUB_PORT_4444_TCP_ADDR: ressignifica-hub
