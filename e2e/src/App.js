@@ -14,18 +14,10 @@ class App {
   }
 
   async setupReceptions (receptions) {
-    await this.db.register(
-      'delete from reception', []
-    )
-    await this.db.register(
-      'alter sequence ressignifica.reception_id_seq restart with 1', []
-    )
-    for (let i = 0, l = receptions.length; i < l; i++) {
-      const { id, name } = receptions[i]
-      await this.db.register(
-        'insert into reception (id, name) values ($1, $2)', [id, name]
-      )
-    }
+    await this.db.clean('reception', 'reception_id_seq')
+    expect(await this.db.count('reception')).to.equal(0)
+    await this.db.insert('reception', receptions)
+    expect(await this.db.count('reception')).to.equal(receptions.length)
   }
 
   async listReceptions () {
@@ -34,6 +26,7 @@ class App {
 
   async receptionsHaveBeenShown (receptions) {
     expect(receptions).to.containSubset(await this.ui.showneds())
+    expect(await this.db.count('reception')).to.equal(receptions.length)
   }
 
   async listAllReceptions (receptions) {
