@@ -1,26 +1,16 @@
-import { Before, Given, When, Then } from 'cucumber'
+import { Given, When, Then } from 'cucumber'
 
 import App from '@/App'
-
-let app, receptions
-
-Before(async () => {
-  app = new App()
-  receptions = [
-    { name: 'João' },
-    { name: 'Francisco' },
-    { name: 'Manoel' }
-  ]
-})
+import Fixtures from '@/Fixtures'
 
 Given(/^There are receptions$/, async () => {
-  await app.setupReceptions(receptions)
+  await App.instance().setupReceptions(Fixtures.RECEPTIONS)
 })
 
 When(/^I list$/, async () => {
-  await app.listReceptions()
+  await App.instance().listReceptions()
 })
 
 Then(/^I see that receptions have been shown$/, async () => {
-  await app.receptionsHaveBeenShown(receptions)
+  await App.instance().receptionsHaveBeenShown(Fixtures.RECEPTIONS)
 })

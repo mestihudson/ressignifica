@@ -20,4 +20,12 @@ export default class ReceptionRepository {
     await client.release()
     return result.rows
   }
+
+  async removeBy (id) {
+    const client = await this.pool.connect()
+    const result = await client.query(
+      'delete from reception where id = $1', [id]
+    )
+    await client.release()
+  }
 }

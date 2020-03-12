@@ -12,12 +12,19 @@ export default class UI {
 
   async showneds () {
     const items = await this.driver
-      .findElements(By.css(`[data-name='Line']`))
+      .findElements(By.xpath(`//*[@data-name='Line']//*[@data-name='Content']`))
     const elements = []
     for (let i = 0, l = items.length; i < l; i++) {
       const name =  await items[i].getText()
       elements.push({ name })
     }
     return elements
+  }
+
+  async removeReception (reception) {
+    const button = await this.driver.findElement(
+      By.xpath(`//*[@data-trigger='Remove' and @data-id='${reception.id}']`)
+    )
+    await button.click()
   }
 }
