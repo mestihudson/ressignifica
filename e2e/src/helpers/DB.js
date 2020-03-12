@@ -11,11 +11,28 @@ export default class DB {
     })
   }
 
-  async register (statement, values) {
+  async transaction (statements) {
+    const results = []
     const client = await this.pool.connect()
-    const result = await client.query(statement, values)
-    await client.release()
-    return result
+    try {
+      await client.query(`begin`)
+      for (let i = 0, l = statements.length; i < l; i++) {
+        const { statement, values } = statements[i]
+        const result = await client.query(statement, values)
+        results.push(result)
+      }
+      await client.query(`commit`)
+    } catch (e) {
+      await client.query(`rollback`)
+    } finally {
+      await client.release()
+    }
+    return results
+  }
+
+  async register (statement, values) {
+    const results = await this.transaction([{ statement, values }])
+    return results[0]
   }
 
   async count (table) {
@@ -24,19 +41,23 @@ export default class DB {
   }
 
   async clean (table, sequence) {
-    await this.register(`delete from ${table}`, [])
-    await this.register(`alter sequence ${sequence} restart with 1`, [])
+    await this.transaction([
+      { statement: `delete from ${table}`, values: []},
+      { statement: `alter sequence ${sequence} restart with 1`, values: []}
+    ])
   }
 
   async insert (table, records) {
-    for (let i = 0, l = records.length; i < l; i++) {
-      const keys = Object.keys(records[i])
-      const vars = Object.keys(keys)
-        .map((item, index) => `$${index + 1}`).join(', ')
-      const values = Object.values(records[i])
-      await this.register(
-        `insert into reception (${keys.join(', ')}) values (${vars})`, values
-      )
-    }
+    await this.transaction(
+      records.map((record) => {
+        const keys = Object.keys(record)
+        const vars = Object.keys(keys)
+          .map((item, index) => `$${index + 1}`).join(', ')
+        const values = Object.values(record)
+        const statement =
+          `insert into reception (${keys.join(', ')}) values (${vars})`
+        return { statement, values }
+      })
+    )
   }
 }
