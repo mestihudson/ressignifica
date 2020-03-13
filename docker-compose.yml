@@ -16,6 +16,8 @@ services:
     volumes:
     - .:/ws
     environment:
+      RETRIES: 30
+      INTERVAL: 20s
       UI_URL: http://ressignifica-ui:3000
       HUB_URL: http://ressignifica-hub:4444/wd/hub
       SCREENSHOTS: .screenshots
