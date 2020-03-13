@@ -64,7 +64,7 @@ services:
     container_name: ressignifica-ui
     image: node:13.8.0-alpine3.11
     working_dir: /ws/ui
-    entrypoint: /bin/sh -c 'yarn install && yarn start; tail -f'
+    entrypoint: /bin/sh -c 'yarn install && yarn start:dev; tail -f'
     volumes:
     - .:/ws
     environment:
