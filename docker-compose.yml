@@ -16,6 +16,7 @@ services:
     volumes:
     - .:/ws
     environment:
+      BROWSER: chrome
       FEATURES: src/features/**/*.feature
       NODEMON_COMMAND: yarn e2e
       RETRIES: 30
