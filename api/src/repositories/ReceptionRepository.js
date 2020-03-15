@@ -23,9 +23,22 @@ export default class ReceptionRepository {
 
   async removeBy (id) {
     const client = await this.pool.connect()
-    const result = await client.query(
+    await client.query(
       'delete from reception where id = $1', [id]
     )
     await client.release()
+  }
+
+  async add (reception) {
+    const client = await this.pool.connect()
+    await client.query(
+      'insert into reception (name) values ($1)', [reception.name]
+    )
+    const result = await client.query(
+      'select last_value as id from reception_id_seq', []
+    )
+    await client.release()
+    const { id } = result.rows[0]
+    return { id }
   }
 }

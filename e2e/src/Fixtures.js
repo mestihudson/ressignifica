@@ -1,12 +1,19 @@
+const RECEPTIONS = [
+  { id: 1, name: 'João' },
+  { id: 2, name: 'Francisco' },
+  { id: 3, name: 'Manoel' }
+]
+const RECEPTION_TO_ADD = { id: 4, name: 'Raimundo' }
+const RECEPTIONS_AFTER_ADD = [ ...RECEPTIONS, RECEPTION_TO_ADD ]
+const RECEPTION_TO_REMOVE_INDEX = 1
+const RECEPTION_TO_REMOVE = RECEPTIONS[RECEPTION_TO_REMOVE_INDEX]
+const RECEPTIONS_AFTER_REMOVE = RECEPTIONS
+  .filter((a, i) => i !== RECEPTION_TO_REMOVE_INDEX)
+
 export default {
-  RECEPTIONS: [
-    { id: 1, name: 'João' },
-    { id: 2, name: 'Francisco' },
-    { id: 3, name: 'Manoel' }
-  ],
-  TO_REMOVE_RECEPTION: { id: 1, name: 'João' },
-  AFTER_REMOVE_RECEPTIONS: [
-    { id: 2, name: 'Francisco' },
-    { id: 3, name: 'Manoel' }
-  ]
+  RECEPTIONS,
+  RECEPTION_TO_ADD,
+  RECEPTIONS_AFTER_ADD,
+  RECEPTION_TO_REMOVE,
+  RECEPTIONS_AFTER_REMOVE
 }

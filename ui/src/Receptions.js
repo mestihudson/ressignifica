@@ -7,7 +7,7 @@ const Remove = ({ id, onRemove }) => {
     onRemove(id)
   }
   return <button data-trigger='Remove' data-id={id} onClick={onClick}
-  >Remove</button>
+  >Remover</button>
 }
 
 const Receptions = () => {

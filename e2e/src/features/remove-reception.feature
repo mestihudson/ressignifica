@@ -1,6 +1,5 @@
 Feature: Remove reception
 
-  @doing
   Scenario: Success
     Given I list all receptions
      When I remove

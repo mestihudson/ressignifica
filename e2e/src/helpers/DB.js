@@ -37,7 +37,13 @@ export default class DB {
 
   async count (table) {
     const result = await this.register(`select count(*) from ${table}`, [])
-    return parseInt(result.rows[0].count)
+    const count = parseInt(result.rows[0].count)
+    return count
+  }
+
+  async next (sequence) {
+    const result = await this.register(`select last_value from ${sequence}`, [])
+    return parseInt(result.rows[0].last_value)
   }
 
   async clean (table, sequence) {
@@ -47,17 +53,19 @@ export default class DB {
     ])
   }
 
-  async insert (table, records) {
+  async insert (table, records, key) {
     await this.transaction(
-      records.map((record) => {
-        const keys = Object.keys(record)
-        const vars = Object.keys(keys)
-          .map((item, index) => `$${index + 1}`).join(', ')
-        const values = Object.values(record)
-        const statement =
-          `insert into reception (${keys.join(', ')}) values (${vars})`
-        return { statement, values }
-      })
+      records
+        .map((record) => {
+          const keys = Object.keys(record).filter((k) => k !== key)
+          const vars = Object.keys(keys)
+            .map((item, index) => `$${index + 1}`).join(', ')
+          const values = Object.entries(record).filter((e) => e[0] !== key)
+            .map((e) => e[1])
+          const statement =
+            `insert into reception (${keys.join(', ')}) values (${vars})`
+          return { statement, values }
+        })
     )
   }
 }

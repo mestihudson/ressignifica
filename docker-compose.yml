@@ -16,6 +16,8 @@ services:
     volumes:
     - .:/ws
     environment:
+      FEATURES: src/features/**/*.feature
+      NODEMON_COMMAND: yarn e2e
       RETRIES: 30
       INTERVAL: 20s
       UI_URL: http://ressignifica-ui:3000

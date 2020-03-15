@@ -7,7 +7,18 @@ export default class UI {
   }
 
   async list () {
-    await this.driver.get(this.url)
+    await this.open()
+    await this.goToListReceptions()
+  }
+
+  async goToListReceptions () {
+  }
+
+  async goToAddReception () {
+    const button = await this.driver.findElement(
+      By.xpath(`//*[@data-trigger='AddReception']`)
+    )
+    await button.click()
   }
 
   async showneds () {
@@ -26,5 +37,31 @@ export default class UI {
       By.xpath(`//*[@data-trigger='Remove' and @data-id='${reception.id}']`)
     )
     await button.click()
+  }
+
+  async fillReception (reception) {
+    await this.open()
+    await this.goToAddReception()
+    const input = await this.driver.findElement(
+      By.xpath(`//*[@data-name='Name']`)
+    )
+    await input.sendKeys(reception.name)
+  }
+
+  async open() {
+    await this.driver.get(this.url)
+  }
+
+  async addReception () {
+    const button = await this.driver.findElement(
+      By.xpath(`//*[@data-trigger='Save']`)
+    )
+    await button.click()
+  }
+
+  async receptionSuccessAddedMessageHaveBeenShown() {
+    const notification = await this.driver
+      .findElement(By.css(`[data-name='Notification']`))
+    return await notification.getText()
   }
 }

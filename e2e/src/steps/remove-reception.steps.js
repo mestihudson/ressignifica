@@ -8,9 +8,9 @@ Given(/^I list all receptions$/, async () => {
 })
 
 When(/^I remove$/, async () => {
-  await App.instance().removeReception(Fixtures.TO_REMOVE_RECEPTION)
+  await App.instance().removeReception(Fixtures.RECEPTION_TO_REMOVE)
 })
 
 Then(/^I see that receptions have been decreased$/, async () => {
-  await App.instance().receptionsHaveBeenShown(Fixtures.AFTER_REMOVE_RECEPTIONS)
+  await App.instance().receptionsHaveBeenShown(Fixtures.RECEPTIONS_AFTER_REMOVE)
 })

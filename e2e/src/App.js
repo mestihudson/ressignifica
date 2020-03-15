@@ -15,9 +15,9 @@ class App {
 
   async setupReceptions (receptions) {
     await this.db.clean('reception', 'reception_id_seq')
-    expect(await this.db.count('reception')).to.equal(0)
-    await this.db.insert('reception', receptions)
-    expect(await this.db.count('reception')).to.equal(receptions.length)
+    await this.existentReceptions(0)
+    await this.db.insert('reception', receptions, 'id')
+    await this.existentReceptions(receptions.length)
   }
 
   async listReceptions () {
@@ -26,7 +26,7 @@ class App {
 
   async receptionsHaveBeenShown (receptions) {
     expect(receptions).to.containSubset(await this.ui.showneds())
-    expect(await this.db.count('reception')).to.equal(receptions.length)
+    await this.existentReceptions(receptions.length)
   }
 
   async listAllReceptions (receptions) {
@@ -37,6 +37,25 @@ class App {
 
   async removeReception (reception) {
     await this.ui.removeReception(reception)
+  }
+
+  async fillReception (receptions, reception) {
+    await this.setupReceptions(receptions)
+    await this.ui.fillReception(reception)
+  }
+
+  async addReception () {
+    await this.ui.addReception()
+  }
+
+  async receptionHaveBeenAdded (receptions) {
+    expect(await this.ui.receptionSuccessAddedMessageHaveBeenShown())
+      .to.equal(`Reception successful created.`)
+    await this.existentReceptions(receptions.length)
+  }
+
+  async existentReceptions (quantity) {
+    expect(await this.db.count('reception')).to.equal(quantity)
   }
 }
 

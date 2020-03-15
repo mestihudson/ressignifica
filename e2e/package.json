@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "e2e": "cucumber-js --require cucumber.conf.js --require-module @babel/register --format node_modules/cucumber-pretty --require src/steps src/features/**/*.feature",
-    "e2e:w": "nodemon --exec 'yarn e2e' -e 'js,json,feature' --ignore 'node_modules'"
+    "cucumber": "cucumber-js",
+    "e2e": "yarn cucumber --require cucumber.conf.js --require-module @babel/register --format node_modules/cucumber-pretty --require src/steps $FEATURES",
+    "e2e:w": "nodemon --exec '$NODEMON_COMMAND' -e 'js,json,feature' --ignore 'node_modules'"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
