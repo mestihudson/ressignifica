@@ -44,8 +44,29 @@ class App {
     await this.ui.fillReception(reception)
   }
 
+  async selectReceptionToChange (receptions, receptionToChange, changes) {
+    await this.setupReceptions(receptions)
+    await this.ui.editReception(receptionToChange, changes)
+  }
+
+  async changeReception () {
+    await this.ui.changeReception()
+  }
+
   async addReception () {
     await this.ui.addReception()
+  }
+
+  async receptionHaveBeenChanged (receptions, changed) {
+    expect(await this.ui.receptionSuccessChangedMessageHaveBeenShown())
+      .to.equal(`Reception successful updated.`)
+    const result = await this.db
+      .register(
+        'select count(*) from reception where name = $1',
+        [changed.name]
+      )
+    expect(result.rows[0].count).to.equal('1')
+    await this.existentReceptions(receptions.length)
   }
 
   async receptionHaveBeenAdded (receptions) {

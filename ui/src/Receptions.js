@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Api from '@/services/Api'
+import Navigation from '@/services/Navigation'
 
 const Remove = ({ id, onRemove }) => {
   const onClick = () => {
@@ -8,6 +9,14 @@ const Remove = ({ id, onRemove }) => {
   }
   return <button data-trigger='Remove' data-id={id} onClick={onClick}
   >Remover</button>
+}
+
+const Edit = ({ id, onEdit }) => {
+  const onClick = () => {
+    onEdit(id)
+  }
+  return <button data-trigger='Edit' data-id={id} onClick={onClick}
+  >Editar</button>
 }
 
 const Receptions = () => {
@@ -18,6 +27,7 @@ const Receptions = () => {
         setItems(response)
       })
   }, [])
+
   const onLineRemove = (id) => {
     Api.removeReception(id)
       .then(() => {
@@ -25,6 +35,11 @@ const Receptions = () => {
         setItems(after)
       })
   }
+
+  const onLineEdit = (id) => {
+    Navigation.go(`/#/reception/edit/${id}`)
+  }
+
   return <ul>
     {
       items
@@ -32,6 +47,7 @@ const Receptions = () => {
           return <li data-name='Line' key={id}>
             <span>{name}</span>
             <Remove onRemove={onLineRemove} id={id}/>
+            <Edit onEdit={onLineEdit} id={id}/>
           </li>
         })
     }

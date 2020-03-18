@@ -15,5 +15,15 @@ export default {
     return axios.post(`/api/reception`, reception)
       .then(({ data }) => Promise.resolve(data))
       .catch((errors) => Promise.reject(errors))
+  },
+  async getReception (id) {
+    return axios.get(`/api/reception/${id}`)
+      .then(({ data }) => Promise.resolve(data))
+      .catch((errors) => Promise.reject(errors))
+  },
+  async updateReception (id, reception) {
+    return axios.put(`/api/reception/${id}`, reception)
+      .then(() => Promise.resolve())
+      .catch((errors) => Promise.reject(errors))
   }
 }

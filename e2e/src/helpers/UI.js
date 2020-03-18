@@ -21,6 +21,15 @@ export default class UI {
     await button.click()
   }
 
+  async goToEditReception (reception) {
+    const button = await this.driver.findElement(
+      By.xpath(
+        `//*[@data-trigger='Edit' and @data-id='${reception.id}']`
+      )
+    )
+    await button.click()
+  }
+
   async showneds () {
     const items = await this.driver
       .findElements(By.xpath(`//*[@data-name='Line']//*[@data-name='Content']`))
@@ -42,26 +51,49 @@ export default class UI {
   async fillReception (reception) {
     await this.open()
     await this.goToAddReception()
-    const input = await this.driver.findElement(
-      By.xpath(`//*[@data-name='Name']`)
-    )
-    await input.sendKeys(reception.name)
+    await this.fillFormReception(reception)
   }
 
-  async open() {
+  async open () {
     await this.driver.get(this.url)
   }
 
-  async addReception () {
+  async fillFormReception(reception) {
+    const input = await this.driver.findElement(
+      By.xpath(`//*[@data-name='Name']`)
+    )
+    await input.clear()
+    await input.sendKeys(reception.name)
+  }
+
+  async saveReception () {
     const button = await this.driver.findElement(
       By.xpath(`//*[@data-trigger='Save']`)
     )
     await button.click()
   }
 
+  async editReception (reception, changes) {
+    await this.list()
+    await this.goToEditReception(reception)
+    await this.fillFormReception(changes)
+  }
+
+  async addReception () {
+    await this.saveReception()
+  }
+
+  async changeReception () {
+    await this.saveReception()
+  }
+
   async receptionSuccessAddedMessageHaveBeenShown() {
     const notification = await this.driver
       .findElement(By.css(`[data-name='Notification']`))
     return await notification.getText()
+  }
+
+  async receptionSuccessChangedMessageHaveBeenShown() {
+    return await this.receptionSuccessAddedMessageHaveBeenShown()
   }
 }

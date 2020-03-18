@@ -21,7 +21,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test",
+    "test": "craco test --noStackTrace",
     "eject": "react-scripts eject",
     "test:ci": "yarn test --passWithNoTests --silent --forceExit --detectOpenHandles --watchAll=false --ci=true",
     "dist": "yarn test:ci && yarn build",

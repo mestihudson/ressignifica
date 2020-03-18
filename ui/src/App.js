@@ -23,6 +23,9 @@ const App = () => {
           <Route exact path="/reception/add">
             <Reception/>
           </Route>
+          <Route exact path="/reception/edit/:id"
+            render={(props) => <Reception id={props.match.params.id}/>}
+          />
           <Redirect from='/' to='/receptions' />
         </Switch>
       </Router>

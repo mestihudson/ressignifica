@@ -2,11 +2,12 @@ import React from 'react'
 
 import Api from '@/services/Api'
 
-const Reception = () => {
+const Reception = (props) => {
   const [data, setData] = React.useState({
     name: ''
   })
-  const [message, setMessage] = React.useState(false)
+  const [showMessage, setShowMessage] = React.useState(false)
+  const [message, setMessage] = React.useState('')
 
   const onChange = ({ target }) => {
     const after = { ...data, name: target.value }
@@ -14,23 +15,37 @@ const Reception = () => {
   }
 
   const onClick = () => {
-    Api.addReception(data)
-      .then((response) => {
-        const after = { ...data, ...response }
-        setData(after)
-        setMessage(true)
-      })
+    if (props.id !== undefined) {
+      Api.updateReception(props.id, data)
+        .then(() => {
+          setShowMessage(true)
+          setMessage('Reception successful updated.')
+        })
+    } else {
+      Api.addReception(data)
+        .then((response) => {
+          const after = { ...data, ...response }
+          setData(after)
+          setShowMessage(true)
+          setMessage('Reception successful created.')
+        })
+    }
   }
+
+  React.useEffect(() => {
+    if (props.id !== undefined) {
+      Api.getReception(props.id)
+        .then((data) => {
+          setData(data)
+        })
+    }
+  }, [props.id])
 
   return (
     <div>
-      <input data-name='Name' onChange={onChange}/>
+      <input data-name='Name' onChange={onChange} value={data.name}/>
       <button data-trigger='Save' onClick={onClick}>Salvar</button>
-      {
-        message &&
-        <span data-name='Notification'
-        >Reception successful created.</span>
-      }
+      { showMessage && <span data-name='Notification'>{message}</span> }
     </div>
   )
 }
