@@ -3,18 +3,6 @@ import fs from 'fs'
 
 import { Builder } from 'selenium-webdriver'
 
-const filename = (context, screenshots, browser) => {
-  const status = context.result.status
-  const feature = context
-    .sourceLocation.uri.replace(/^(.+)\/features\//, '').replace(/\.feature$/, '')
-  const scenario = S(context.pickle.name).slugify().s
-  const directory = `${screenshots}/${browser}/${status}/${feature}`
-  if (!fs.existsSync(directory)){
-    fs.mkdirSync(directory, { recursive: true })
-  }
-  return `${directory}/${scenario}`
-}
-
 class Driver {
   constructor ({ browser, hub, screenshots }) {
     this.driver = new Builder()
@@ -24,10 +12,31 @@ class Driver {
     this.screenshots = screenshots
   }
 
+  scenario (context) {
+    return S(context.pickle.name).slugify().s
+  }
+
+  async filename (context) {
+    const status = context.result.status
+    const feature = this.feature(context)
+    const scenario = this.scenario(context)
+    const directory = `${this.screenshots}/${this.browser}/${status}/${feature}`
+    if (!fs.existsSync(directory)){
+      fs.mkdirSync(directory, { recursive: true })
+    }
+    return `${directory}/${scenario}`
+  }
+
+  feature (context) {
+    return context.sourceLocation.uri.replace(/^(.+)\/features\//, '')
+      .replace(/\.feature$/, '')
+  }
+
   async screenshot (context) {
+    const name = await this.filename(context)
     this.driver.takeScreenshot().then((image, errors) => {
       fs.writeFile(
-        `${filename(context, this.screenshots, this.browser)}.png`,
+         `${name}.png`,
         image,
         'base64',
         (error) => {
@@ -40,9 +49,10 @@ class Driver {
   }
 
   async source (context) {
+    const name = await this.filename(context)
     this.driver.getPageSource().then((source) => {
       fs.writeFile(
-        `${filename(context, this.screenshots, this.browser)}.html`,
+        `${name}.html`,
         source, (error) => {
         if (error) {
           return console.error(error)
