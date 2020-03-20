@@ -24,7 +24,7 @@
     "eject": "react-scripts eject",
     "test:ci": "yarn test --passWithNoTests --silent --forceExit --detectOpenHandles --watchAll=false --ci=true",
     "dist": "yarn test:ci && yarn build",
-    "start:dev": "(yarn test &); yarn start"
+    "start:dev": "yarn start"
   },
   "eslintConfig": {
     "extends": "react-app"
