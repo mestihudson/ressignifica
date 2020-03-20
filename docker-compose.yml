@@ -20,7 +20,7 @@ services:
       FEATURES: src/features/**/*.feature
       NODEMON_COMMAND: yarn e2e
       RETRIES: 30
-      INTERVAL: 20s
+      INTERVAL: 30s
       UI_URL: http://ressignifica-ui:3000
       HUB_URL: http://ressignifica-hub:4444/wd/hub
       SCREENSHOTS: .screenshots

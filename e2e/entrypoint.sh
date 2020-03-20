@@ -50,7 +50,7 @@ run_at() {
 }
 
 main() {
-  which curl > /dev/null || (apk update && apk add curl)
+  which curl > /dev/null || (apk update && apk add curl) || exit 1
   retries="${RETRIES:-10}"
   interval="${INTERVAL:-10s}"
   while [ true ]; do
