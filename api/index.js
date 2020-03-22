@@ -1,5 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 
 import LoadReceptions from '@/usecases/LoadReceptions'
 import RemoveReception from '@/usecases/RemoveReception'
@@ -10,6 +11,13 @@ import UpdateReception from '@/usecases/UpdateReception'
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(
+  cors({
+    origin: process.env.NODE_ENV === 'production'
+      ? process.env.CORS_ORIGIN
+      : '*'
+  })
+)
 const router = express.Router()
 
 router.get('/assisteds', async (request, response) => {

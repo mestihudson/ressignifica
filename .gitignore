@@ -2,3 +2,5 @@ node_modules
 yarn.lock
 yarn-error.log
 .screenshots
+nginx/html/*
+!nginx/html/.keep

@@ -110,9 +110,25 @@ services:
     environment:
       PORT: 4000
       HOST: 0.0.0.0
+      CORS_ORIGIN: 'http://ressignifica.github.io'
     ports:
     - 4000
     networks:
       ressignifica:
         ipv4_address: 14.14.14.8
+
+  ressignifica-nginx:
+    container_name: ressignifica-nginx
+    image: nginx:1.17.9-alpine
+    volumes:
+    - .:/ws
+    - ./nginx/html:/usr/share/nginx/html
+    environment:
+      PORT: 80
+      HOST: 0.0.0.0
+    ports:
+    - 80:80
+    networks:
+      ressignifica:
+        ipv4_address: 14.14.14.9
 

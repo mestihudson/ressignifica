@@ -24,6 +24,7 @@
     "eject": "react-scripts eject",
     "test:ci": "yarn test --passWithNoTests --silent --forceExit --detectOpenHandles --watchAll=false --ci=true",
     "dist": "yarn test:ci && yarn build",
+    "deploy": "NODE_ENV=production rm -frv build /ws/nginx/html/* && mkdir -p /ws/nginx/html && yarn dist && mv -fv build/* /ws/nginx/html",
     "start:dev": "yarn start"
   },
   "eslintConfig": {
