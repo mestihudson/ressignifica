@@ -8,38 +8,39 @@ import GetReception from '@/usecases/GetReception'
 import UpdateReception from '@/usecases/UpdateReception'
 
 const app = express()
-
 app.use(bodyParser.urlencoded({ extended: false }))
-
 app.use(bodyParser.json())
+const router = express.Router()
 
-app.get('/assisteds', async (request, response) => {
+router.get('/assisteds', async (request, response) => {
   const useCase = new LoadReceptions()
   response.json(await useCase.exec()).end()
 })
 
-app.delete('/reception/:id', async (request, response) => {
+router.delete('/reception/:id', async (request, response) => {
   const useCase = new RemoveReception()
   await useCase.exec(request.params.id)
   response.status(201).end()
 })
 
-app.get('/reception/:id', async (request, response) => {
+router.get('/reception/:id', async (request, response) => {
   const useCase = new GetReception()
   response.json(await useCase.exec(request.params.id)).end()
 })
 
-app.put('/reception/:id', async (request, response) => {
+router.put('/reception/:id', async (request, response) => {
   const useCase = new UpdateReception()
   await useCase.exec(request.params.id, request.body)
   response.status(201).end()
 })
 
-app.post('/reception', async (request, response) => {
+router.post('/reception', async (request, response) => {
   const useCase = new AddReception()
   const result = await useCase.exec(request.body)
   await response.json(result).end()
 })
+
+app.use('/api', router)
 
 const port = process.env.PORT
 
