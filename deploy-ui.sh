@@ -1,6 +1,6 @@
 #!/bin/sh
 export UI_PATH=.deploy/ui
-export GIT_HEROKU_URL="http://$HEROKU_USERNAME:$HEROKU_API_KEY@git.heroku.com/ressignifica.git"
+export GIT_HEROKU_URL="https://$HEROKU_USERNAME:$HEROKU_API_KEY@git.heroku.com/ressignifica.git"
 git clone $GIT_HEROKU_URL $UI_PATH
 rm -frv $UI_PATH/*
 cp -frv ui/build $UI_PATH/dist

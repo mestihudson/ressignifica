@@ -25,9 +25,7 @@ before_script:
 
 script:
   - docker-compose exec ressignifica-e2e /bin/sh -c '/ws/e2e/entrypoint.sh'
-  - export NODE_ENV=prodution
-  - export REACT_APP_API_URL=http://ressignifica-api.herokuapp.com
-  - docker-compose exec ressignifica-ui /bin/sh -c 'yarn build'
+  - docker-compose exec ressignifica-ui /bin/sh -c 'NODE_ENV=prodution export REACT_APP_API_URL=http://ressignifica-api.herokuapp.com yarn build'
   # - ./migrate-db.sh
   # - ./deploy-api.sh
   - ./deploy-ui.sh
