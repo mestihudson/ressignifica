@@ -17,6 +17,7 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
 before_script:
   - docker-compose --file ci.docker-compose.yml down --volumes
@@ -25,8 +26,12 @@ before_script:
 script:
   - docker-compose exec ressignifica-e2e /bin/sh -c '/ws/e2e/entrypoint.sh'
   - export NODE_ENV=prodution
-  - export REACT_APP_API_URL=http://ressignifica-api.heroku.app
+  - export REACT_APP_API_URL=http://ressignifica-api.herokuapp.com
   - docker-compose exec ressignifica-ui /bin/sh -c 'yarn build'
+  # - ./migrate-db.sh
+  # - ./deploy-api.sh
+  - ./deploy-ui.sh
 
 after_script:
   - docker-compose --file ci.docker-compose.yml down --volumes
+
