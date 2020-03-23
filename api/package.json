@@ -1,9 +1,12 @@
 {
   "scripts": {
-    "start": "babel-node index.js",
-    "start:w": "nodemon --exec 'yarn start'"
+    "start": "babel-node src/index.js",
+    "start:w": "nodemon --exec 'yarn start'",
+    "build": "yarn babel src --out-dir dist",
+    "prod:start": "node dist/index.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.6",
     "@babel/node": "^7.8.4",
     "@babel/plugin-proposal-class-properties": "^7.8.3",

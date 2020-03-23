@@ -3,11 +3,11 @@ import { Pool } from 'pg'
 export default class ReceptionRepository {
   constructor () {
     this.pool = new Pool({
-      user: 'ressignifica',
-      password: 'ressignifica@12345678',
-      database: 'postgres',
-      host: 'ressignifica-db',
-      port: 5432
+      host: process.env.RESSIGNIFICA_DB_HOST,
+      port: process.env.RESSIGNIFICA_DB_PORT,
+      user: process.env.RESSIGNIFICA_DB_USER,
+      database: process.env.RESSIGNIFICA_DB_DATABASE,
+      password: process.env.RESSIGNIFICA_DB_PASSWORD
     })
   }
 
