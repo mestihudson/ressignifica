@@ -4,7 +4,6 @@ services:
   - docker
 
 env:
-  # - DOCKER_VERSION=19.03.8
   - DOCKER_COMPOSE_VERSION=1.25.4
 
 before_install:
@@ -25,9 +24,10 @@ before_script:
 
 script:
   - docker-compose exec ressignifica-e2e /bin/sh -c '/ws/e2e/entrypoint.sh'
-  - docker-compose exec ressignifica-ui /bin/sh -c 'export NODE_ENV=prodution && export REACT_APP_API_URL=http://ressignifica-api.herokuapp.com && yarn build'
   # - ./migrate-db.sh
+  - docker-compose exec ressignifica-api /bin/sh -c 'yarn build'
   - ./deploy-api.sh
+  - docker-compose exec ressignifica-ui /bin/sh -c 'export NODE_ENV=prodution && export REACT_APP_API_URL=http://ressignifica-api.herokuapp.com && yarn build'
   - ./deploy-ui.sh
 
 after_script:
