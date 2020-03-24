@@ -27,7 +27,7 @@ script:
   # - ./migrate-db.sh
   - docker-compose exec ressignifica-api /bin/sh -c 'yarn build'
   - ./deploy-api.sh
-  - docker-compose exec ressignifica-ui /bin/sh -c 'export NODE_ENV=prodution && export REACT_APP_API_URL=http://ressignifica-api.herokuapp.com && yarn build'
+  - docker-compose exec ressignifica-ui /bin/sh -c 'export NODE_ENV=prodution && export REACT_APP_API_URL=https://ressignifica-api.herokuapp.com && yarn build'
   - ./deploy-ui.sh
 
 after_script:
