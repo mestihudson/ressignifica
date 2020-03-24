@@ -16,7 +16,3 @@ create sequence ressignifica.reception_id_seq
 alter table ressignifica.reception
   alter column id set default nextval('ressignifica.reception_id_seq'::regclass)
 ;
-
-alter table ressignifica.reception owner to ressignifica;
-
-alter table ressignifica.reception_id_seq owner to ressignifica;

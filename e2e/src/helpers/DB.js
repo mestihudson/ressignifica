@@ -3,11 +3,7 @@ import { Pool } from 'pg'
 export default class DB {
   constructor () {
     this.pool = new Pool({
-      user: 'ressignifica',
-      password: 'ressignifica@12345678',
-      database: 'postgres',
-      host: 'ressignifica-db',
-      port: 5432
+      connectionString: process.env.DATABASE_URL
     })
   }
 
@@ -16,6 +12,7 @@ export default class DB {
     const client = await this.pool.connect()
     try {
       await client.query(`begin`)
+      await client.query(`set search_path to ${process.env.SCHEMA_DEFAULT}`, [])
       for (let i = 0, l = statements.length; i < l; i++) {
         const { statement, values } = statements[i]
         const result = await client.query(statement, values)

@@ -7,3 +7,4 @@ nginx/html/*
 travis.sh
 dist
 build
+.env.production

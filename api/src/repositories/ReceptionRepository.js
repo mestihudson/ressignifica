@@ -3,16 +3,17 @@ import { Pool } from 'pg'
 export default class ReceptionRepository {
   constructor () {
     this.pool = new Pool({
-      host: process.env.RESSIGNIFICA_DB_HOST,
-      port: process.env.RESSIGNIFICA_DB_PORT,
-      user: process.env.RESSIGNIFICA_DB_USER,
-      database: process.env.RESSIGNIFICA_DB_DATABASE,
-      password: process.env.RESSIGNIFICA_DB_PASSWORD
+      connectionString: process.env.DATABASE_URL
     })
+  }
+
+  async setSchema (client) {
+    await client.query(`set search_path to ${process.env.SCHEMA_DEFAULT}`, [])
   }
 
   async load () {
     const client = await this.pool.connect()
+    await this.setSchema(client)
     const result = await client.query(
       'select * from reception',
       []
@@ -23,6 +24,7 @@ export default class ReceptionRepository {
 
   async removeBy (id) {
     const client = await this.pool.connect()
+    await this.setSchema(client)
     await client.query(
       'delete from reception where id = $1', [id]
     )
@@ -31,6 +33,7 @@ export default class ReceptionRepository {
 
   async add (reception) {
     const client = await this.pool.connect()
+    await this.setSchema(client)
     await client.query(
       'insert into reception (name) values ($1)', [reception.name]
     )
@@ -44,6 +47,7 @@ export default class ReceptionRepository {
 
   async get (id) {
     const client = await this.pool.connect()
+    await this.setSchema(client)
     const result = await client.query(
       'select * from reception where id = $1',
       [id]
@@ -54,6 +58,7 @@ export default class ReceptionRepository {
 
   async update (id, reception) {
     const client = await this.pool.connect()
+    await this.setSchema(client)
     await client.query(
       'update reception set name = $2 where id = $1', [id, reception.name]
     )

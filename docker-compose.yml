@@ -15,15 +15,8 @@ services:
     entrypoint: /bin/sh -c '/ws/e2e/entrypoint.sh; tail -f'
     volumes:
     - .:/ws
-    environment:
-      BROWSER: chrome
-      FEATURES: src/features/**/*.feature
-      NODEMON_COMMAND: yarn e2e
-      RETRIES: 30
-      INTERVAL: 30s
-      UI_URL: http://ressignifica-ui:3000
-      HUB_URL: http://ressignifica-hub:4444/wd/hub
-      SCREENSHOTS: .screenshots
+    env_file:
+    - e2e/.env.local
     networks:
       ressignifica:
         ipv4_address: 14.14.14.2
@@ -42,11 +35,8 @@ services:
     image: selenium/node-chrome-debug:3.141.59
     ports:
     - 5901:5900
-    environment:
-      HUB_PORT_4444_TCP_ADDR: ressignifica-hub
-      HUB_PORT_4444_TCP_PORT: 4444
-      SCREEN_WIDTH: 2000
-      SCREEN_HEIGHT: 2000
+    env_file:
+    - selenium/.env.local
     networks:
       ressignifica:
         ipv4_address: 14.14.14.4
@@ -56,11 +46,8 @@ services:
     image: selenium/node-firefox-debug:3.141.59
     ports:
     - 5902:5900
-    environment:
-      HUB_PORT_4444_TCP_ADDR: ressignifica-hub
-      HUB_PORT_4444_TCP_PORT: 4444
-      SCREEN_WIDTH: 2000
-      SCREEN_HEIGHT: 2000
+    env_file:
+    - selenium/.env.local
     networks:
       ressignifica:
         ipv4_address: 14.14.14.5
@@ -72,10 +59,8 @@ services:
     entrypoint: /bin/sh -c 'yarn install && yarn start:dev; tail -f'
     volumes:
     - .:/ws
-    environment:
-      HOST: 0.0.0.0
-      PORT: 3000
-      REACT_APP_API_URL: http://ressignifica-api:4000
+    env_file:
+    - ui/.env.local
     ports:
     - 7000:3000
     networks:
@@ -93,7 +78,7 @@ services:
     environment:
       PGDATESTYLE: iso, dmy
     env_file:
-    - db/local.env
+    - db/.env.local
     ports:
     - 5432
     networks:
@@ -107,15 +92,8 @@ services:
     entrypoint: /bin/sh -c 'yarn install && yarn start:w; tail -f'
     volumes:
     - .:/ws
-    environment:
-      PORT: 4000
-      HOST: 0.0.0.0
-      CORS_ORIGIN: 'http://ressignifica.github.io'
-      RESSIGNIFICA_DB_PORT: 5432
-      RESSIGNIFICA_DB_USER: ressignifica
-      RESSIGNIFICA_DB_DATABASE: postgres
-      RESSIGNIFICA_DB_HOST: ressignifica-db
-      RESSIGNIFICA_DB_PASSWORD: ressignifica@12345678
+    env_file:
+    - api/.env.local
     ports:
     - 4000
     networks:
@@ -128,9 +106,8 @@ services:
     volumes:
     - .:/ws
     - ./nginx/html:/usr/share/nginx/html
-    environment:
-      PORT: 80
-      HOST: 0.0.0.0
+    env_file:
+    - nginx/.env.local
     ports:
     - 80:80
     networks:
