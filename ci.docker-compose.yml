@@ -84,7 +84,7 @@ services:
 
   ressignifica-db:
     container_name: ressignifica-db
-    image: postgres:9.6.15-alpine
+    image: postgres:12.2-alpine
     working_dir: /ws/db
     command: ["postgres", "-c", "log_statement=all"]
     volumes:
